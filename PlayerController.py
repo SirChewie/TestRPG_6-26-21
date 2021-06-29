@@ -10,8 +10,8 @@ class Player:
     pMaxXP = 100
     hp = 0
     playerDmg = 0
-    s_str = 2
-    s_vit = 10
+    s_str = 1
+    s_vit = 1
     #Equiped by player
     class EquipedStats:
         class Helmet:
@@ -59,6 +59,7 @@ class Player:
             "\n Strength: " + str(Player.s_str) +
             "\n Vitality: " + str(Player.s_vit)
               )
+        pass
     #Equips the selected item
     def equip_item(self):
         pass
