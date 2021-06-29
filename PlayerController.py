@@ -1,4 +1,4 @@
-import LootController
+
 
 
 class Player:
@@ -39,10 +39,11 @@ class Player:
         items_I=[]
         #sets up equiped equipment
     def setup_epuiped(self):
+        pass
         #setup to test system
-        Player.Inventory.items_I.append(LootController.Loot.TestWep.name)
-        Player.Inventory.items_I.append(LootController.Loot.TestWep.name)
-        Player.Inventory.items_I.append(LootController.Loot.TestWep.name)
+        #Player.Inventory.items_I.append(Loot.TestWep.name)
+        #Player.Inventory.items_I.append(Loot.TestWep.name)
+        #Player.Inventory.items_I.append(Loot.TestWep.name)
 
     #Calculates dmg for player
     def player_dmg_calc(self):

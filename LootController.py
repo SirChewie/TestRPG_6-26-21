@@ -1,5 +1,6 @@
 import random
 
+from PlayerController import Player
 
 
 class Loot:
@@ -9,6 +10,7 @@ class Loot:
     ldr = []
     drops = []
     dropMod = 0
+    coinGain = 0
 
     class TestWep():
         equipType = 'Weapon'
@@ -29,13 +31,15 @@ class Loot:
     #Loot drop lists
     armorList = [TestArmor]
     wepList = [TestWep, TestWep2]
-    lootList = [armorList, wepList]
+    noneList = []
+    lootList = [armorList, wepList, noneList]
 
     #What loot that was dropped?
     def loot_drop_roll(self):
 
 
         i = random.randint(0, (len(Loot.lootList) - 1))
+        self.coinGain = random.randint(1, 10)
         if i == 0:
             x = Loot.armorList
             b = random.randint(0, (len(x)-1))
@@ -48,6 +52,12 @@ class Loot:
             self.ldr.append(Loot.wepList[b])
         else:
             pass
+        Player.Inventory.coins += self.coinGain
+        print(
+            "Coins gained " + str(self.coinGain) + "\n" +
+            "Coins Total " + str(Player.Inventory.coins)+ "\n")
+
+
 
 
     #Calls Loot drop roll x(numDrop) times
@@ -67,7 +77,7 @@ class Loot:
                 "\n" + str(x.equipType) + "\n" +
                 str(x.name) + "\n" +
                 str(x.level) + "\n" +
-                str(x.dmg)
+                str(x.dmg) + "\n"
                 )
         Loot.drops = []
 Loot.loot_drop(Loot)

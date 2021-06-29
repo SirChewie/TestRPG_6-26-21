@@ -22,8 +22,9 @@ def rewards():
         print("congratulations "+Player.name + "\nYou are now level: " + Player.level)
     else:
         pass
+    Loot.loot_drop(Loot)
     Player.Inventory.coins += 1
-    pass
+
 
 
 
