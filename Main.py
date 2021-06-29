@@ -27,4 +27,4 @@ print("Player Damage: " + str(Player.playerDmg))
 print("currency: " + str(Player.Inventory.coins))
 
 #print player stats
-Player.print_player_stats(Player)
+Player.print_stats(Player)
