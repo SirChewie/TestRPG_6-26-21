@@ -59,3 +59,6 @@ class Player:
             "\n Strength: " + str(Player.s_str) +
             "\n Vitality: " + str(Player.s_vit)
               )
+    #Equips the selected item
+    def equip_item(self):
+        pass
