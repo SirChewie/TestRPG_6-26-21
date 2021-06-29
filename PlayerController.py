@@ -19,7 +19,7 @@ class Player:
             level = 0
             pRes = 0
             mRes = 0
-        class Armor:
+        class Chest:
             name = ''
             level = 0
             pRes = 0

@@ -8,18 +8,22 @@ class Loot:
 
     ldr = []
     drops = []
-    class TestWep():
+    dropMod = 0
 
-        name = 'Cool Weapon'
+    class TestWep():
+        equipType = 'Weapon'
+        name = 'Axe'
         level = 1
         dmg = 5
     class TestWep2():
-        name = 'Taco'
+        equipType = 'Weapon'
+        name = 'Sword'
         level = 2
         dmg = 7
 
     class TestArmor():
-        name = 'Armor'
+        equipType = 'Chest'
+        name = 'Shirt'
         level = 1
         dmg = 2
     #Loot drop lists
@@ -27,9 +31,9 @@ class Loot:
     wepList = [TestWep, TestWep2]
     lootList = [armorList, wepList]
 
-    #Get loot that was dropped
+    #What loot that was dropped?
     def loot_drop_roll(self):
-        self.drops = []
+
 
         i = random.randint(0, (len(Loot.lootList) - 1))
         if i == 0:
@@ -46,16 +50,24 @@ class Loot:
             pass
 
 
-#Calls Loot drop roll
-Loot.loot_drop_roll(Loot)
+    #Calls Loot drop roll x(numDrop) times
+    def loot_drop(self):
+        self.numDrops = 0
+
+        self.numDrops = random.randint((1 + self.dropMod), (5 + self.dropMod))
+        while self.numDrops > 0:
+            Loot.loot_drop_roll(Loot)
+            self.numDrops -= 1
 
 
-for x in Loot.drops:
-    print(x.name)
-    print(x.level)
-    print(x.dmg)
-Loot.loot_drop_roll(Loot)
-for x in Loot.drops:
-    print(x.name)
-    print(x.level)
-    print(x.dmg)
+    #prints out the item(s) info
+        for x in Loot.drops:
+
+            print(
+                "\n" + str(x.equipType) + "\n" +
+                str(x.name) + "\n" +
+                str(x.level) + "\n" +
+                str(x.dmg)
+                )
+        Loot.drops = []
+Loot.loot_drop(Loot)
