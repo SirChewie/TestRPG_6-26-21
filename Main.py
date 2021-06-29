@@ -10,6 +10,8 @@ def player_setup():
 
 def rewards():
     Player.pCurrXP += 1
+    if Player.pCurrXP >= Player.pMaxXP:
+        print("Congradulations "+Player.name + "\nYou are now level: "+ Player.level)
     Player.Inventory.coins += 1
 
 #setup Player
@@ -17,10 +19,12 @@ player_setup()
 
 #Test Inventory
 print(Player.Inventory.items_I)
-Player.Inventory.setup_epuiped(Player.Inventory)
+Player.setup_epuiped(Player)
 print(Player.Inventory.items_I)
 
 print("Player Health: " + str(Player.hp))
 print("Player Damage: " + str(Player.playerDmg))
 print("currency: " + str(Player.Inventory.coins))
-print("Player Stats: \n Strength: " + str(Player.s_str) + "\n Vitality: " + str(Player.s_vit))
+
+#print player stats
+Player.print_player_stats(Player)

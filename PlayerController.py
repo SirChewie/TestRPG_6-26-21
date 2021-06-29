@@ -1,9 +1,11 @@
-
+import LootController
 
 
 class Player:
     def __init__(self):
         pass
+    name = ''
+    level = 1
     pCurrXP = 0
     pMaxXP = 100
     hp = 0
@@ -35,12 +37,25 @@ class Player:
     class Inventory:
         coins = 0
         items_I=[]
-        def setup_epuiped(self):
-            Player.Inventory.items_I.append(Player.Test_Wep.name)
-            Player.Inventory.items_I.append(Player.Test_Wep.level)
-            Player.Inventory.items_I.append(Player.Test_Wep.dmg)
+        #sets up equiped equipment
+    def setup_epuiped(self):
+        #setup to test system
+        Player.Inventory.items_I.append(LootController.Loot.TestWep.name)
+        Player.Inventory.items_I.append(LootController.Loot.TestWep.name)
+        Player.Inventory.items_I.append(LootController.Loot.TestWep.name)
 
+    #Calculates dmg for player
     def player_dmg_calc(self):
         self.playerDmg = (self.EquipedStats.Weapon.dmg + self.s_str)
 
-
+    #prints player's stats
+    def print_player_stats(self):
+        print(
+            "Player Stats: " +
+            "\n Name: " + str(Player.name) +
+            "\n Level: " + str(Player.level) +
+            "\n XP : " + str(Player.pCurrXP) + "/" + str(Player.pMaxXP) +
+            "\n Health: " + str(Player.hp) +
+            "\n Strength: " + str(Player.s_str) +
+            "\n Vitality: " + str(Player.s_vit)
+              )

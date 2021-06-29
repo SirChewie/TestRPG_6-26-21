@@ -21,12 +21,12 @@ class Loot:
         name = 'Armor'
         level = 1
         dmg = 2
-
+    #Loot drop lists
     armorList = [TestArmor]
     wepList = [TestWep, TestWep2]
     lootList = [armorList, wepList]
 
-
+    #Get loot that was dropped
     def loot_drop_roll(self):
 
 
