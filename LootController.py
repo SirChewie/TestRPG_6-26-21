@@ -55,7 +55,7 @@ class Loot:
         Player.Inventory.coins += self.coinGain
         print(
             "Coins gained " + str(self.coinGain) + "\n" +
-            "Coins Total " + str(Player.Inventory.coins)+ "\n")
+            "Coins Total " + str(Player.Inventory.coins) + "\n")
 
 
 
