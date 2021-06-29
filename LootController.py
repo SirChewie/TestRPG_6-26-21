@@ -6,7 +6,8 @@ class Loot:
     def __init__(self):
         pass
 
-
+    ldr = []
+    drops = []
     class TestWep():
 
         name = 'Cool Weapon'
@@ -28,17 +29,19 @@ class Loot:
 
     #Get loot that was dropped
     def loot_drop_roll(self):
-
+        self.drops = []
 
         i = random.randint(0, (len(Loot.lootList) - 1))
         if i == 0:
             x = Loot.armorList
             b = random.randint(0, (len(x)-1))
-            self.ldr = Loot.armorList[b]
+            self.drops.append(Loot.armorList[b])
+            self.ldr.append(Loot.armorList[b])
         elif i == 1:
             x = Loot.wepList
             b = random.randint(0, (len(x)-1))
-            self.ldr = Loot.wepList[b]
+            self.drops.append(Loot.wepList[b])
+            self.ldr.append(Loot.wepList[b])
         else:
             pass
 
@@ -47,6 +50,12 @@ class Loot:
 Loot.loot_drop_roll(Loot)
 
 
-print (Loot.ldr.name)
-print (Loot.ldr.level)
-print (Loot.ldr.dmg)
+for x in Loot.drops:
+    print(x.name)
+    print(x.level)
+    print(x.dmg)
+Loot.loot_drop_roll(Loot)
+for x in Loot.drops:
+    print(x.name)
+    print(x.level)
+    print(x.dmg)
