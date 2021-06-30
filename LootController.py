@@ -1,6 +1,6 @@
 import random
 
-from PlayerController import Player
+
 
 
 class Loot:
@@ -12,25 +12,29 @@ class Loot:
     dropMod = 0
     coinGain = 0
 
-    class TestWep():
-        equipType = 'Weapon'
-        name = 'Axe'
-        level = 1
-        dmg = 5
-    class TestWep2():
-        equipType = 'Weapon'
-        name = 'Sword'
-        level = 2
-        dmg = 7
+    class Wep():
+        def __init__(self, equip_type, name, level, dmg):
+            self.equip_type = equip_type
+            self.name = name
+            self.level = level
+            self.dmg = dmg
 
-    class TestArmor():
-        equipType = 'Chest'
-        name = 'Shirt'
-        level = 1
-        dmg = 2
-    #Loot drop lists
-    armorList = [TestArmor]
-    wepList = [TestWep, TestWep2]
+    wep1 = Wep('Weapon', 'Axe', 1, 2)
+    wepList = [wep1]
+
+    class Armor():
+        def __init__(self, equip_type, name, level, pRes, mRes):
+
+            self.equip_type = equip_type
+            self.name = name
+            self.level = level
+            self.pRes = pRes
+            self.mRes = mRes
+    a1 = Armor('Helmet', 'Cloth Hat', 1, 1, 0)
+    a2 = Armor('Chest', 'Cloth Shirt', 1, 1, 0)
+    a3 = Armor('Legs', 'Cloth Pants', 1, 1, 0)
+    armorList = [a1, a2, a3]
+    # Loot drop lists
     noneList = []
     lootList = [armorList, wepList, noneList]
 
@@ -52,10 +56,8 @@ class Loot:
             self.ldr.append(Loot.wepList[b])
         else:
             pass
-        Player.Inventory.coins += self.coinGain
-        print(
-            "Coins gained " + str(self.coinGain) + "\n" +
-            "Coins Total " + str(Player.Inventory.coins) + "\n")
+
+
 
 
 
@@ -72,12 +74,20 @@ class Loot:
 
     #prints out the item(s) info
         for x in Loot.drops:
-
-            print(
-                "\n" + str(x.equipType) + "\n" +
-                str(x.name) + "\n" +
-                str(x.level) + "\n" +
-                str(x.dmg) + "\n"
-                )
+            if x.equip_type == 'Weapon':
+                print(
+                    "\nEquipment type: " + str(x.equip_type) + "\n" +
+                    str(x.name) + "\n" +
+                    "Level req: " + str(x.level) + "\n" +
+                    "Attack: " + str(x.dmg) + "\n"
+                    )
+            else:
+                print(
+                    "\nEquipment type: " + str(x.equip_type) + "\n" +
+                    str(x.name) + "\n" +
+                    "Level req: " + str(x.level) + "\n" +
+                    "Physical Res: " + str(x.pRes) + "\n" +
+                    "Magic Res: " + str(x.mRes) + "\n"
+                    )
         Loot.drops = []
 Loot.loot_drop(Loot)
