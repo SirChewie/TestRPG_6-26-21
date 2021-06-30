@@ -14,25 +14,29 @@ class Player:
     s_vit = 1
     #Equiped by player
     class EquipedStats:
-        class Helmet:
-            name = ''
-            level = 0
-            pRes = 0
-            mRes = 0
+        class Helmet():
+            def __init__(self, name, level, pRes, mRes):
+                self.name = name
+                self.level = level
+                self.pRes = pRes
+                self.mRes = mRes
         class Chest:
-            name = ''
-            level = 0
-            pRes = 0
-            mRes = 0
+            def __init__(self, name, level, pRes, mRes):
+                self.name = name
+                self.level = level
+                self.pRes = pRes
+                self.mRes = mRes
         class Legs:
-            name = ''
-            level = 0
-            pRes = 0
-            mRes = 0
+            def __init__(self, name, level, pRes, mRes):
+                self.name = name
+                self.level = level
+                self.pRes = pRes
+                self.mRes = mRes
         class Weapon:
-            name = ''
-            level = 0
-            dmg = 1
+            def __init__(self, name, level, dmg):
+                self.name = name
+                self.level = level
+                self.dmg = dmg
     #Carried by player
     class Inventory:
         coins = 0

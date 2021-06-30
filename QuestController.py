@@ -8,13 +8,13 @@ class Quests():
     qCurrObjective = ''
     #Completed Quest Objective
     qCompObjective = ''
-    qFinished = ''
 
     finishedQuests = []
-    def introduction(self):
+    class introduction():
         name = 'Introduction'
         levelReq = 0
         xpGain = 10
+        qFinished = False
 
 def is_finished(self):
     if (str(self.qCurrObjective) == str(self.qCompObjective)):
