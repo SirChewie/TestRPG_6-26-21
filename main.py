@@ -1,7 +1,5 @@
 #import needed classes
-import win32gui
 
-import LootController
 from PlayerController import Player
 from LootController import Loot
 
@@ -69,7 +67,7 @@ class EquippedGear:
 class Inventory:
     coins = 0
 
-    items_I = [LootController.Loot.wep1, LootController.Loot.a1, LootController.Loot.a2, LootController.Loot.a3]
+    items_I = [Loot.wep1, Loot.a1, Loot.a2, Loot.a3]
     equipped_items = []
     equipping_item = []
 
@@ -189,8 +187,3 @@ Inventory.show_inventory(Inventory)
 
 #print player stats
 Player.print_stats(Player)
-
-def main():
-    win32gui
-if __name__ 'main':
-    main()
