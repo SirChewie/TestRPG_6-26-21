@@ -1,21 +1,32 @@
 #import needed classes
-
 from PlayerController import Player
 from LootController import Loot
 
 global playerNameInput
 
-
-
 def get_player_info():
     global playerNameInput
     playerNameInput = input("Enter your name\n")
     pass
+#prints player's stats
+def print_stats():
+    print(
+        "Player Stats: " +
+        "\n Name: " + str(p1.name) +
+        "\n Level: " + str(p1.level) +
+        "\n XP : " + str(p1.pCurrXP) + "/" + str(p1.pMaxXP) +
+        "\n Health: " + str(p1.hp) +
+        "\n Strength: " + str(p1.s_str) +
+        "\n Vitality: " + str(p1.s_vit) +
+        "\n Attack: " + str(p1.playerDmg)
+          )
+    pass
 
-def player_setup():
-    EquippedGear.player_dmg_calc(Player)
-    Player.hp = (10 * Player.s_vit)
-    Player.name = str(playerNameInput)
+
+
+
+def player_update():
+    player_dmg_calc()
 
 def rewards():
     Player.pCurrXP += 1
@@ -60,8 +71,8 @@ class EquippedGear:
         level = ''
         dmg = 0
 
-    def player_dmg_calc(self):
-        Player.playerDmg = (EquippedGear.EquippedWeapon.dmg + Player.s_str)
+def player_dmg_calc():
+    Player.playerDmg = (EquippedGear.EquippedWeapon.dmg)
 
 #Carried by player
 class Inventory:
@@ -81,7 +92,7 @@ class Inventory:
             print("Please enter a valid input between 0-" + str(a))
         else:
             b = self.items_I[int(x) - 1]
-            if Player.level >= b.level:
+            if p1.level >= b.level:
                 self.equipping_item.insert(1, b)
                 self.items_I.remove(b)
                 self.equip_item(self)
@@ -144,7 +155,7 @@ class Inventory:
                 print("Equipped Legs!")
             else:
                 pass
-            player_setup()
+            player_update()
     def show_equipped(self):
 
         for x in self.equipped_items:
@@ -173,7 +184,15 @@ class Inventory:
 
 #setup Player
 get_player_info()
-player_setup()
+p1 = Player(name=str(playerNameInput),
+                playerDmg=1,
+                s_vit=1,
+                s_str=1,
+                level=1,
+                pCurrXP=0,
+                pMaxXP=100,
+                hp=10
+                )
 
 #Test Inventory
 Inventory.select_item_equip(Inventory)
@@ -186,4 +205,4 @@ Inventory.show_inventory(Inventory)
 #print("currency: " + str(Inventory.coins))
 
 #print player stats
-Player.print_stats(Player)
+print_stats()
