@@ -1,7 +1,6 @@
 
-
-
 class Player:
+
     def __init__(self,
                  name,
                  level,
@@ -10,11 +9,7 @@ class Player:
                  hp,
                  player_dmg,
                  s_str,
-                 s_vit,
-                 curr_quest,
-                 qCurrObjective,
-                 qCompObjective
-                 ):
+                 s_vit):
         self.name = name
         self.level = level
         self.pCurrXP = pCurrXP
@@ -23,9 +18,13 @@ class Player:
         self.player_dmg = player_dmg
         self.s_str = s_str
         self.s_vit = s_vit
-        self.currQuest = curr_quest
-        self.qCurrObjective = qCurrObjective
-        self.qCompObjective = qCompObjective
+    currQuest = ''
+    qCurrObjective = ''
+    qCompObjective = ''
+    inventory = []
+    equipped = {}
+    coins = 0
+
     #Equipped by player
 
 

@@ -12,7 +12,7 @@ class Loot:
     dropMod = 0
     coinGain = 0
 
-    class Wep():
+    class Wep:
         def __init__(self, equip_type, name, level, dmg):
             self.equip_type = equip_type
             self.name = name
@@ -22,7 +22,7 @@ class Loot:
     wep1 = Wep('Weapon', 'Axe', 1, 2)
     wepList = [wep1]
 
-    class Armor():
+    class Armor:
         def __init__(self, equip_type, name, level, pRes, mRes):
 
             self.equip_type = equip_type

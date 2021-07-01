@@ -16,29 +16,42 @@ def get_player_info():
 
 
 def print_stats():
+
+    def print_inventory():
+        l = len(p1.inventory)
+        string_inventory = []
+        for t in p1.inventory[0:l]:
+            b = t
+            string_inventory.append(b.name)
+        return string_inventory
+
+    def print_equipped():
+        el = list(p1.equipped.values())
+        el2 = []
+        for a in el:
+            el2.append(a.name)
+        return el2
+
+
+
     player_info = {'name': [p1.name],
                    'stats':
-                       ['Health:' + str(p1.hp),
+                       ['Health: ' + str(p1.hp),
                         "Attack: " + str(p1.player_dmg),
                         "Strength " + str(p1.s_str),
                         "Vitality " + str(p1.s_vit)
                         ],
                    'level': [p1.level],
                    'XP': [p1.pCurrXP, p1.pMaxXP],
-                   'Quest': [p1.currQuest.name]}
-    stats_list = ['Name:', 'Stats:', 'Level:', 'XP:', 'Quest:']
-    for (x, a) in zip(player_info.values(), stats_list):
-        print(a, x)
-    #print(
-        #"Player Stats: " +
-        #"\n Name: " + str(player_info.name) +
-        #"\n  " + str(player_info.level) +
-        #"\n  " + str(player_info.pCurrXP) + "/" + str(player_info.pMaxXP) +
-        #"\n  " + str(player_info.hp) +
-       # "\n  " + str(player_info.s_str) +
-      #  "\n  " + str(player_info.s_vit) +
-     #   "\n  " + str(player_info.player_dmg)
-    #      )
+                   'Quest': [None],
+                   'Equipped': [print_equipped()],
+                   'Items': [print_inventory()],
+                   'Coins': [p1.coins]
+                   }
+    stats_list = ['Name:', 'Stats:', 'Level:', 'XP:', 'Quest:', 'Equipped:', 'Items:']
+    for (xa, a) in zip(player_info.values(), stats_list):
+        print(a, xa)
+
 
 
 
@@ -53,59 +66,19 @@ def rewards():
     else:
         pass
     Loot.loot_drop(Loot)
-    Inventory.coins += Loot.coinGain
-    print(
-                "Coins gained " + str(Loot.coinGain) + "\n" +
-                "Coins Total " + str(Inventory.coins) + "\n")
 
 
 
-#Equiped by player
-class EquippedGear:
-    class EquippedHelmet:
-        def __init__(self):
-            self.equip_type = "Helmet"
-            self.name = ''
-            self.level = ''
-            self.pRes = 0
-            self.mRes = 0
 
 
 
-    class EquippedChest:
-
-        equip_type = "Chest"
-        name = ''
-        level = ''
-        pRes = 0
-        mRes = 0
-
-    class EquippedLegs:
-
-        equip_type = "Legs"
-        name = ''
-        level = ''
-        pRes = 0
-        mRes = 0
-
-    class EquippedWeapon:
-        equip_type = "Weapon"
-        name = ''
-        level = ''
-        dmg = 0
 
 
 def player_dmg_calc():
-    Player.player_dmg = round((EquippedGear.EquippedWeapon.dmg * p1.s_str)/2)
+    p1.player_dmg = round((p1.equipped['Weapon'].dmg * p1.s_str)/2)
 
 
-#Carried by player
-class Inventory:
-    coins = 0
-
-    items_I = [Loot.wep1, Loot.a1, Loot.a2, Loot.a3]
-    equipped_items = []
-    equipping_item = []
+class InventoryManagement:
 
     def select_item_equip(self):
 
@@ -125,62 +98,62 @@ class Inventory:
             else:
                 print("Your level is to low to equip this item.")
 
+        # equips equipment
+        def equip_item(self):
+
+            for x in self.equipping_item:
+                if x.equip_type == "Weapon":
+                    name = x.name
+                    level = x.level
+                    dmg = x.dmg
+                    try:
+                        i = self.equipped_items[4]
+                        self.items_I.append(i)
+                    except IndexError:
+                        pass
+                    self.equipped_items.insert(4, x)
+                    print("Equipped Weapon!")
+                elif x.equip_type == "Helmet":
+                    name = x.name
+                    level = x.level
+                    pRes = x.pRes
+                    mRes = x.mRes
+                    try:
+                        i = self.equipped_items[1]
+                        self.items_I.append(i)
+                    except IndexError:
+                        pass
+                    self.equipped_items.insert(1, x)
+                    print("Equipped Helmet!")
+                elif x.equip_type == "Chest":
+                    name = x.name
+                    level = x.level
+                    pRes = x.pRes
+                    mRes = x.mRes
+                    try:
+                        i = self.equipped_items[2]
+                        self.items_I.append(i)
+                    except IndexError:
+                        pass
+                    self.equipped_items.insert(2, x)
+                    print("Equipped Chest!")
+                elif x.equip_type == "Legs":
+                    name = x.name
+                    level = x.level
+                    pRes = x.pRes
+                    mRes = x.mRes
+                    try:
+                        i = self.equipped_items[3]
+                        self.items_I.append(i)
+                    except IndexError:
+                        pass
+                    self.equipped_items.insert(3, x)
+                    print("Equipped Legs!")
+                else:
+                    pass
+                player_update()
 
 
-    #equips equipment
-    def equip_item(self):
-
-        for x in self.equipping_item:
-            if x.equip_type == "Weapon":
-                EquippedGear.EquippedWeapon.name = x.name
-                EquippedGear.EquippedWeapon.level = x.level
-                EquippedGear.EquippedWeapon.dmg = x.dmg
-                try:
-                    i = self.equipped_items[4]
-                    self.items_I.append(i)
-                except IndexError:
-                    pass
-                self.equipped_items.insert(4, x)
-                print("Equipped Weapon!")
-            elif x.equip_type == "Helmet":
-                EquippedGear.EquippedWeapon.name = x.name
-                EquippedGear.EquippedWeapon.level = x.level
-                EquippedGear.EquippedWeapon.pRes = x.pRes
-                EquippedGear.EquippedWeapon.mRes = x.mRes
-                try:
-                    i = self.equipped_items[1]
-                    self.items_I.append(i)
-                except IndexError:
-                    pass
-                self.equipped_items.insert(1, x)
-                print("Equipped Helmet!")
-            elif x.equip_type == "Chest":
-                EquippedGear.EquippedWeapon.name = x.name
-                EquippedGear.EquippedWeapon.level = x.level
-                EquippedGear.EquippedWeapon.pRes = x.pRes
-                EquippedGear.EquippedWeapon.mRes = x.mRes
-                try:
-                    i = self.equipped_items[2]
-                    self.items_I.append(i)
-                except IndexError:
-                    pass
-                self.equipped_items.insert(2, x)
-                print("Equipped Chest!")
-            elif x.equip_type == "Legs":
-                EquippedGear.EquippedWeapon.name = x.name
-                EquippedGear.EquippedWeapon.level = x.level
-                EquippedGear.EquippedWeapon.pRes = x.pRes
-                EquippedGear.EquippedWeapon.mRes = x.mRes
-                try:
-                    i = self.equipped_items[3]
-                    self.items_I.append(i)
-                except IndexError:
-                    pass
-                self.equipped_items.insert(3, x)
-                print("Equipped Legs!")
-            else:
-                pass
-            player_update()
     def show_equipped(self):
 
         for x in self.equipped_items:
@@ -200,12 +173,6 @@ class Inventory:
                     str(x.mRes)
                     )
 
-
-    def show_inventory(self):
-
-        for x in self.items_I:
-            print(x.name)
-
 def quest_tracking():
     print(p1.currQuest)
     print(p1.qCurrObjective)
@@ -223,7 +190,10 @@ def is_finished():
     else:
         p1.qFinished = False
 #setup Player
+
 get_player_info()
+#Equipped by player
+
 p1 = Player(name=str(playerNameInput),
             player_dmg=1,
             s_vit=1,
@@ -231,22 +201,15 @@ p1 = Player(name=str(playerNameInput),
             level=1,
             pCurrXP=0,
             pMaxXP=100,
-            hp=10,
-            curr_quest=QuestController.q1,
-            qCurrObjective=QuestController.q1.qCurrObjective,
-            qCompObjective=QuestController.q1.qCompObjective
+            hp=10
             )
+equipping = [Loot.wep1, Loot.a1, Loot.a2, Loot.a3]
+for x in equipping:
+    eq = x
+    p1.equipped.update({str(eq.equip_type): eq})
 
 #Test Inventory
-Inventory.select_item_equip(Inventory)
-Inventory.show_equipped(Inventory)
 print("---------------------")
-Inventory.show_inventory(Inventory)
-
-
-#print("Player Health: " + str(Player.hp))
-#print("Player Damage: " + str(Player.playerDmg))
-#print("currency: " + str(Inventory.coins))
 
 #print player stats
 print_stats()
