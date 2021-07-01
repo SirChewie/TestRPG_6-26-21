@@ -1,23 +1,24 @@
 class Quests():
-    def __init__(self):
+    def __init__(self, name, levelReq, xpGain,qCurrObjective,qCompObjective, qFinished):
+        self.name = name
+        self.levelReq = levelReq
+        self.xpGain = xpGain
+        self.qCurrObjective = qCurrObjective
+        self.qCompObjective = qCompObjective
+        self.qFinished = qFinished
+
+    def quest_updater(self):
         pass
 
-    #Current quest player is on
-    currQuest = ''
-    #Current Quest Objective
-    qCurrObjective = ''
-    #Completed Quest Objective
-    qCompObjective = ''
+finishedQuests = []
 
-    finishedQuests = []
-    class introduction():
-        name = 'Introduction'
-        levelReq = 0
-        xpGain = 10
-        qFinished = False
 
-def is_finished(self):
-    if (str(self.qCurrObjective) == str(self.qCompObjective)):
-        self.qFinished = True
-    else:
-        self.qFinished = False
+q1 = Quests(name='Introduction',
+            levelReq=0,
+            xpGain=10,
+            qCurrObjective="Learning to play",
+            qCompObjective=None,
+            qFinished=False
+            )
+
+quest_dict = [q1]

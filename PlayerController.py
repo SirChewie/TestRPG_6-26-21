@@ -2,24 +2,32 @@
 
 
 class Player:
-    def __init__(self, name, level, pCurrXP, pMaxXP, hp, playerDmg, s_str, s_vit):
+    def __init__(self,
+                 name,
+                 level,
+                 pCurrXP,
+                 pMaxXP,
+                 hp,
+                 player_dmg,
+                 s_str,
+                 s_vit,
+                 curr_quest,
+                 qCurrObjective,
+                 qCompObjective
+                 ):
         self.name = name
         self.level = level
         self.pCurrXP = pCurrXP
         self.pMaxXP = pMaxXP
         self.hp = hp
-        self.playerDmg = playerDmg
+        self.player_dmg = player_dmg
         self.s_str = s_str
         self.s_vit = s_vit
-    #Equiped by player
+        self.currQuest = curr_quest
+        self.qCurrObjective = qCurrObjective
+        self.qCompObjective = qCompObjective
+    #Equipped by player
 
-    def setup_epuiped(self):
-        pass
-        #setup to test system
-        #Player.Inventory.items_I.append(Loot.TestWep.name)
-        #Player.Inventory.items_I.append(Loot.TestWep.name)
-        #Player.Inventory.items_I.append(Loot.TestWep.name)
 
-    #Calculates dmg for player
 
 

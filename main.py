@@ -1,26 +1,44 @@
 #import needed classes
+import QuestController
 from PlayerController import Player
 from LootController import Loot
 
 global playerNameInput
+global currQuest
+
 
 def get_player_info():
     global playerNameInput
     playerNameInput = input("Enter your name\n")
     pass
+
 #prints player's stats
+
+
 def print_stats():
-    print(
-        "Player Stats: " +
-        "\n Name: " + str(p1.name) +
-        "\n Level: " + str(p1.level) +
-        "\n XP : " + str(p1.pCurrXP) + "/" + str(p1.pMaxXP) +
-        "\n Health: " + str(p1.hp) +
-        "\n Strength: " + str(p1.s_str) +
-        "\n Vitality: " + str(p1.s_vit) +
-        "\n Attack: " + str(p1.playerDmg)
-          )
-    pass
+    player_info = {'name': [p1.name],
+                   'stats':
+                       ['Health:' + str(p1.hp),
+                        "Attack: " + str(p1.player_dmg),
+                        "Strength " + str(p1.s_str),
+                        "Vitality " + str(p1.s_vit)
+                        ],
+                   'level': [p1.level],
+                   'XP': [p1.pCurrXP, p1.pMaxXP],
+                   'Quest': [p1.currQuest.name]}
+    stats_list = ['Name:', 'Stats:', 'Level:', 'XP:', 'Quest:']
+    for (x, a) in zip(player_info.values(), stats_list):
+        print(a, x)
+    #print(
+        #"Player Stats: " +
+        #"\n Name: " + str(player_info.name) +
+        #"\n  " + str(player_info.level) +
+        #"\n  " + str(player_info.pCurrXP) + "/" + str(player_info.pMaxXP) +
+        #"\n  " + str(player_info.hp) +
+       # "\n  " + str(player_info.s_str) +
+      #  "\n  " + str(player_info.s_vit) +
+     #   "\n  " + str(player_info.player_dmg)
+    #      )
 
 
 
@@ -45,12 +63,15 @@ def rewards():
 #Equiped by player
 class EquippedGear:
     class EquippedHelmet:
+        def __init__(self):
+            self.equip_type = "Helmet"
+            self.name = ''
+            self.level = ''
+            self.pRes = 0
+            self.mRes = 0
 
-        equip_type = "Helmet"
-        name = ''
-        level = ''
-        pRes = 0
-        mRes = 0
+
+
     class EquippedChest:
 
         equip_type = "Chest"
@@ -58,6 +79,7 @@ class EquippedGear:
         level = ''
         pRes = 0
         mRes = 0
+
     class EquippedLegs:
 
         equip_type = "Legs"
@@ -65,14 +87,17 @@ class EquippedGear:
         level = ''
         pRes = 0
         mRes = 0
+
     class EquippedWeapon:
         equip_type = "Weapon"
         name = ''
         level = ''
         dmg = 0
 
+
 def player_dmg_calc():
-    Player.playerDmg = (EquippedGear.EquippedWeapon.dmg)
+    Player.player_dmg = round((EquippedGear.EquippedWeapon.dmg * p1.s_str)/2)
+
 
 #Carried by player
 class Inventory:
@@ -181,24 +206,43 @@ class Inventory:
         for x in self.items_I:
             print(x.name)
 
+def quest_tracking():
+    print(p1.currQuest)
+    print(p1.qCurrObjective)
+    print(p1.qCompObjective)
+    # Current quest player is on
+    currQuest = ''
+    # Current Quest Objective
+    qCurrObjective = ''
+    # Completed Quest Objective
+    qCompObjective = ''
+def is_finished():
 
+    if str(p1.qCurrObjective) == str(p1.qCompObjective):
+        p1.qFinished = True
+    else:
+        p1.qFinished = False
 #setup Player
 get_player_info()
 p1 = Player(name=str(playerNameInput),
-                playerDmg=1,
-                s_vit=1,
-                s_str=1,
-                level=1,
-                pCurrXP=0,
-                pMaxXP=100,
-                hp=10
-                )
+            player_dmg=1,
+            s_vit=1,
+            s_str=1,
+            level=1,
+            pCurrXP=0,
+            pMaxXP=100,
+            hp=10,
+            curr_quest=QuestController.q1,
+            qCurrObjective=QuestController.q1.qCurrObjective,
+            qCompObjective=QuestController.q1.qCompObjective
+            )
 
 #Test Inventory
 Inventory.select_item_equip(Inventory)
 Inventory.show_equipped(Inventory)
 print("---------------------")
 Inventory.show_inventory(Inventory)
+
 
 #print("Player Health: " + str(Player.hp))
 #print("Player Damage: " + str(Player.playerDmg))
