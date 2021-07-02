@@ -22,7 +22,7 @@ class Player:
     qCurrObjective = ''
     qCompObjective = ''
     inventory = []
-    equipped = {}
+    equipped = []
     coins = 0
 
     #Equipped by player
