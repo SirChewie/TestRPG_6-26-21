@@ -52,26 +52,21 @@ def print_stats():
         print(a, xa)
 
 
-
-
-
 def player_update():
+
     player_dmg_calc()
 
 def rewards():
     p1.pCurrXP += 1
     if p1.pCurrXP >= p1.pMaxXP:
-        print("congratulations "+ p1.name + "\nYou are now level: " + p1.level)
+        print("congratulations " + p1.name + "\nYou are now level: " + p1.level)
     else:
         pass
     Loot.loot_drop(Loot)
 
 
 def player_dmg_calc():
-    try:
-        p1.player_dmg = round((p1.equipped[0].dmg * p1.s_str)/2)
-    except KeyError:
-        pass
+    p1.player_dmg = round((p1.equipped[0].dmg * p1.s_str))
 
 class InventoryManagement:
     equipping = []
