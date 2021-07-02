@@ -57,11 +57,6 @@ class Loot:
         else:
             pass
 
-
-
-
-
-
     #Calls Loot drop roll x(numDrop) times
     def loot_drop(self):
         self.numDrops = 0
@@ -90,4 +85,3 @@ class Loot:
                     "Magic Res: " + str(x.mRes) + "\n"
                     )
         Loot.drops = []
-Loot.loot_drop(Loot)

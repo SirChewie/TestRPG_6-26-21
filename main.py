@@ -1,4 +1,6 @@
 #import needed classes
+import sys
+
 import QuestController
 from PlayerController import Player
 from LootController import Loot
@@ -42,7 +44,7 @@ def print_stats():
                         ],
                    'level': [p1.level],
                    'XP': [p1.pCurrXP, p1.pMaxXP],
-                   'Quest': [None],
+                   'Quest': quest_tracking(),
                    'Equipped': print_equipped(),
                    'Items': print_inventory(),
                    'Coins': [p1.coins]
@@ -66,7 +68,31 @@ def rewards():
 
 
 def player_dmg_calc():
-    p1.player_dmg = round((p1.equipped[0].dmg * p1.s_str))
+    if p1.equipped[0].equip_type == 'Weapon':
+        p1.player_dmg = round((p1.equipped[0].dmg * p1.s_str))
+    else:
+        pass
+
+
+def show_detailed_equipped():
+
+    for x in p1.equipped:
+        if x.equip_type == 'Weapon':
+            print(
+                "\n" +
+                str(x.name) + "\n" +
+                str(x.level) + "\n" +
+                str(x.dmg)
+                )
+        else:
+            print(
+                "\n" +
+                str(x.name) + "\n" +
+                str(x.level) + "\n" +
+                str(x.pRes) + "\n" +
+                str(x.mRes)
+                )
+
 
 class InventoryManagement:
     equipping = []
@@ -76,73 +102,67 @@ class InventoryManagement:
         for ba in p1.inventory:
             print("\n" + str(f) + ": " + str(ba.name))
             f += 1
+        try:
+            x = int(input("What item would you like to equip?\n"))
+            a = len(p1.inventory)
 
-        x = input("What item would you like to equip?\n")
-
-        a = len(p1.inventory)
-
-        if int(x) > a or int(x) <= 0:
-            print("Please enter a valid input between 0-" + str(a))
-            self.select_item_equip(self)
-        else:
-            b = p1.inventory[int(x) - 1]
-            if p1.level >= b.level:
-                self.equipping.insert(1, b)
-                p1.inventory.remove(b)
-                self.equip_item(self)
-                self.equipping.remove(b)
-            else:
-                print("Your level is to low to equip this item.")
+            if int(x) > a or int(x) <= 0:
+                print("Please enter a valid input between 0-" + str(a))
                 self.select_item_equip(self)
+            else:
+                b = p1.inventory[int(x) - 1]
+                if p1.level >= b.level:
+                    self.equipping.insert(1, b)
+                    p1.inventory.remove(b)
+                    self.equip_item(self)
+                    self.equipping.remove(b)
+                else:
+                    print("Your level is to low to equip this item.")
+                    self.select_item_equip(self)
+        except ValueError:
+            print("Please enter an integer only.")
+            self.select_item_equip(self)
         self.equipping = []
 
     # equips equipment
     def equip_item(self):
+
         for x in self.equipping:
-            eq = x
-            p1.equipped.insert(0, eq)
+            if x.equip_type == 'Weapon':
+                eq = x
+                p1.equipped.insert(0, eq)
+            elif x.equip_type == 'Helmet':
+                eq = x
+                p1.equipped.insert(1, eq)
+            elif x.equip_type == 'Chest':
+                eq = x
+                p1.equipped.insert(2, eq)
+            elif x.equip_type == 'Legs':
+                eq = x
+                p1.equipped.insert(3, eq)
+
         player_update()
 
-    def show_detailed_equipped(self):
-
-        for x in p1.equipped:
-            if x.equip_type == 'Weapon':
-                print(
-                    "\n" +
-                    str(x.name) + "\n" +
-                    str(x.level) + "\n" +
-                    str(x.dmg)
-                    )
-            else:
-                print(
-                    "\n" +
-                    str(x.name) + "\n" +
-                    str(x.level) + "\n" +
-                    str(x.pRes) + "\n" +
-                    str(x.mRes)
-                    )
 
 def quest_tracking():
-    print(p1.currQuest)
-    print(p1.qCurrObjective)
-    print(p1.qCompObjective)
     # Current quest player is on
-    currQuest = ''
+    p1.currQuest = QuestController.q1.name
     # Current Quest Objective
-    qCurrObjective = ''
+    p1.qCurrObjective = QuestController.q1.qCurrObjective
     # Completed Quest Objective
-    qCompObjective = ''
+    p1.qCompObjective = QuestController.q1.qCompObjective
+
+
 def is_finished():
 
     if str(p1.qCurrObjective) == str(p1.qCompObjective):
-        p1.qFinished = True
+        QuestController.q1.qFinished = True
     else:
-        p1.qFinished = False
+        pass
+
+
 #setup Player
-
 get_player_info()
-#Equipped by player
-
 p1 = Player(name=str(playerNameInput),
             player_dmg=1,
             s_vit=1,
@@ -152,12 +172,15 @@ p1 = Player(name=str(playerNameInput),
             pMaxXP=100,
             hp=10
             )
-print_stats()
-p1.inventory = [Loot.wep1,Loot.a1, Loot.a3]
-InventoryManagement.select_item_equip(InventoryManagement)
+
 #Test Inventory
 print("---------------------")
 
 #print player stats
 print_stats()
-InventoryManagement.show_detailed_equipped(InventoryManagement)
+
+try:
+    while 1 < 2:
+        InventoryManagement.select_item_equip(InventoryManagement)
+except KeyboardInterrupt:
+    sys.exit()
