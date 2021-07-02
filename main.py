@@ -4,18 +4,35 @@ import sys
 import QuestController
 from PlayerController import Player
 from LootController import Loot
+from TextColorContoller import Colors
+import os
 
 global playerNameInput
 global currQuest
+
+
+def clear():
+    os.system('cls')
 
 
 def get_player_info():
     global playerNameInput
     playerNameInput = input("Enter your name\n")
 
+#setup Player
+get_player_info()
+p1 = Player(name=str(playerNameInput),
+            player_dmg=1,
+            s_vit=1,
+            s_str=1,
+            level=1,
+            pCurrXP=0,
+            pMaxXP=100,
+            hp=10
+            )
+
+
 #prints player's stats
-
-
 def print_stats():
 
     def print_inventory():
@@ -32,8 +49,6 @@ def print_stats():
         for pa in el:
             el2.append(pa.name)
         return el2
-
-
 
     player_info = {'name': [p1.name],
                    'stats':
@@ -57,6 +72,7 @@ def print_stats():
 def player_update():
 
     player_dmg_calc()
+
 
 def rewards():
     p1.pCurrXP += 1
@@ -161,26 +177,41 @@ def is_finished():
         pass
 
 
-#setup Player
-get_player_info()
-p1 = Player(name=str(playerNameInput),
-            player_dmg=1,
-            s_vit=1,
-            s_str=1,
-            level=1,
-            pCurrXP=0,
-            pMaxXP=100,
-            hp=10
-            )
+def main_menu():
+    menu = ['Continue', 'Character', 'Shop', 'Help', 'Exit']
+    f = 1
+    print('\nMAIN MENU' + "\n" + "---------------------")
+    for xa in menu:
+        print(str(f) + ": " + str(xa))
+        f += 1
+    x = str(input())
+    lm = len(menu)
+    try:
+        if int(x) <= 0 or int(x) > lm:
+            print(Colors.fg.red+"Please enter a valid input from 1-"+str(lm)+Colors.reset)
+        elif x == '1':
+            pass
+        elif x == '2':
+            clear()
+            print_stats()
+            InventoryManagement.select_item_equip(InventoryManagement)
+        elif x == '3':
+            pass
+        elif x == '4':
+            print("What would you like help with?")
+        elif x == '5':
+            sys.exit()
+    except ValueError:
+        print(Colors.fg.red+"Please enter a valid input(ValueError)"+Colors.reset)
 
-#Test Inventory
-print("---------------------")
 
 #print player stats
 print_stats()
 
+
+#Keeps program running
 try:
     while 1 < 2:
-        InventoryManagement.select_item_equip(InventoryManagement)
+        main_menu()
 except KeyboardInterrupt:
     sys.exit()
