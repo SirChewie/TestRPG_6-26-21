@@ -1,4 +1,7 @@
 
+global playerNameInput
+
+
 class Player:
 
     def __init__(self,
@@ -25,7 +28,14 @@ class Player:
     equipped = []
     coins = 0
 
-    #Equipped by player
+
+def get_player_info():
+    global playerNameInput
+    playerNameInput = input("Enter your name\n")
+
+
+
+
 
 
 
