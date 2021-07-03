@@ -7,16 +7,16 @@ class Player:
     def __init__(self,
                  name,
                  level,
-                 pCurrXP,
-                 pMaxXP,
+                 CurrXP,
+                 MaxXP,
                  hp,
                  player_dmg,
                  s_str,
                  s_vit):
         self.name = name
         self.level = level
-        self.pCurrXP = pCurrXP
-        self.pMaxXP = pMaxXP
+        self.CurrXP = CurrXP
+        self.MaxXP = MaxXP
         self.hp = hp
         self.player_dmg = player_dmg
         self.s_str = s_str
@@ -27,6 +27,7 @@ class Player:
     inventory = []
     equipped = []
     coins = 0
+    dropMod = 1
 
 
 def get_player_info():

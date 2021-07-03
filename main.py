@@ -1,6 +1,8 @@
 #import needed classes
 import sys
 import os
+
+import EnemyController
 import QuestController
 import PlayerController as PC
 from LootController import Loot
@@ -40,7 +42,7 @@ def print_stats():
                         "Vitality " + str(p1.s_vit)
                         ],
                    'level': [p1.level],
-                   'XP': [p1.pCurrXP, p1.pMaxXP],
+                   'XP': [p1.CurrXP, p1.MaxXP],
                    'Quest': quest_tracking(),
                    'Equipped': print_equipped(),
                    'Items': print_inventory(),
@@ -56,13 +58,15 @@ def player_update():
 
 
 def rewards():
-    p1.pCurrXP += 1
-    if p1.pCurrXP >= p1.pMaxXP:
-        print("congratulations " + p1.name + "\nYou are now level: " + p1.level)
-    else:
-        pass
-    Loot.loot_drop(Loot)
+    p1.CurrXP += 10
+    if p1.CurrXP >= p1.MaxXP:
+        print("congratulations " + str(p1.name) + "\nYou are now level: " + str(p1.level))
 
+    Loot.dropMod = p1.dropMod
+    Loot.loot_drop(Loot)
+    for x in Loot.drops:
+        p1.inventory.append(x)
+    Loot.drops = []
 
 def player_dmg_calc():
     if p1.equipped[0].equip_type == 'Weapon':
@@ -90,41 +94,6 @@ def show_detailed_equipped():
                 str(x.mRes)
                 )
 
-# prints player's stats
-def print_stats():
-
-    def print_inventory():
-        il = len(p1.inventory)
-        string_inventory = []
-        for t in p1.inventory[0:il]:
-            b = t
-            string_inventory.append(b.name)
-        return string_inventory
-
-    def print_equipped():
-        el = list(p1.equipped)
-        el2 = []
-        for pa in el:
-            el2.append(pa.name)
-        return el2
-
-    player_info = {'name': [p1.name],
-                   'stats':
-                       ['Health: ' + str(p1.hp),
-                        "Attack: " + str(p1.player_dmg),
-                        "Strength " + str(p1.s_str),
-                        "Vitality " + str(p1.s_vit)
-                        ],
-                   'level': [p1.level],
-                   'XP': [p1.pCurrXP, p1.pMaxXP],
-                   'Quest': quest_tracking(),
-                   'Equipped': print_equipped(),
-                   'Items': print_inventory(),
-                   'Coins': [p1.coins]
-                   }
-    stats_list = ['Name:', 'Stats:', 'Level:', 'XP:', 'Quest:', 'Equipped:', 'Items:']
-    for (xa, a) in zip(player_info.values(), stats_list):
-        print(a, xa)
 
 class InventoryManagement:
     equipping = []
@@ -206,7 +175,7 @@ def main_menu():
         if int(x) <= 0 or int(x) > lm:
             print(Colors.fg.red+"Please enter a valid input from 1-"+str(lm)+Colors.reset)
         elif x == '1':
-            pass
+            encounter()
         elif x == '2':
             clear()
             print_stats()
@@ -220,6 +189,14 @@ def main_menu():
         print(Colors.fg.red+"Please enter a valid input(ValueError)"+Colors.reset)
 
 
+def encounter():
+    print('\nENCOUNTER!' + "\n" + "---------------------")
+    EnemyController.spawn_enemy()
+    EnemyController.print_stats()
+    rewards()
+
+
+
 # setup Player
 PC.get_player_info()
 
@@ -228,8 +205,8 @@ p1 = PC.Player(name=str(PC.playerNameInput),
                s_vit=1,
                s_str=1,
                level=1,
-               pCurrXP=0,
-               pMaxXP=100,
+               CurrXP=0,
+               MaxXP=100,
                hp=10
                )
 

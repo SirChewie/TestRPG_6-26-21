@@ -45,11 +45,13 @@ class Loot:
         i = random.randint(0, (len(Loot.lootList) - 1))
         self.coinGain = random.randint(1, 10)
         if i == 0:
+            print('THE MONSTER WAS CARRYING SOMETHING!')
             x = Loot.armorList
             b = random.randint(0, (len(x)-1))
             self.drops.append(Loot.armorList[b])
             self.ldr.append(Loot.armorList[b])
         elif i == 1:
+            print('THE MONSTER WAS CARRYING SOMETHING!')
             x = Loot.wepList
             b = random.randint(0, (len(x)-1))
             self.drops.append(Loot.wepList[b])
@@ -61,7 +63,7 @@ class Loot:
     def loot_drop(self):
         self.numDrops = 0
 
-        self.numDrops = random.randint((1 + self.dropMod), (5 + self.dropMod))
+        self.numDrops = random.randint((1 * self.dropMod), (2 * self.dropMod))
         while self.numDrops > 0:
             Loot.loot_drop_roll(Loot)
             self.numDrops -= 1
@@ -84,4 +86,4 @@ class Loot:
                     "Physical Res: " + str(x.pRes) + "\n" +
                     "Magic Res: " + str(x.mRes) + "\n"
                     )
-        Loot.drops = []
+
