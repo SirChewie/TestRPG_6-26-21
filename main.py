@@ -15,40 +15,40 @@ def clear():
     os.system('cls')
 
 
-    def print_stats():
+def print_stats():
 
-        def print_inventory():
-            il = len(PC.p1.inventory)
-            string_inventory = []
-            for t in PC.p1.inventory[0:il]:
-                b = t
-                string_inventory.append(b.name)
-            return string_inventory
+    def print_inventory():
+        il = len(p1.inventory)
+        string_inventory = []
+        for t in p1.inventory[0:il]:
+            b = t
+            string_inventory.append(b.name)
+        return string_inventory
 
-        def print_equipped():
-            el = list(PC.p1.equipped)
-            el2 = []
-            for pa in el:
-                el2.append(pa.name)
-            return el2
+    def print_equipped():
+        el = list(p1.equipped)
+        el2 = []
+        for pa in el:
+            el2.append(pa.name)
+        return el2
 
-        player_info = {'name': [PC.p1.name],
-                       'stats':
-                           ['Health: ' + str(PC.p1.hp),
-                            "Attack: " + str(PC.p1.player_dmg),
-                            "Strength " + str(PC.p1.s_str),
-                            "Vitality " + str(PC.p1.s_vit)
-                            ],
-                       'level': [PC.p1.level],
-                       'XP': [PC.p1.pCurrXP, PC.p1.pMaxXP],
-                       'Quest': quest_tracking(),
-                       'Equipped': print_equipped(),
-                       'Items': print_inventory(),
-                       'Coins': [PC.p1.coins]
-                       }
-        stats_list = ['Name:', 'Stats:', 'Level:', 'XP:', 'Quest:', 'Equipped:', 'Items:']
-        for (xa, a) in zip(player_info.values(), stats_list):
-            print(a, xa)
+    player_info = {'name': [p1.name],
+                   'stats':
+                       ['Health: ' + str(p1.hp),
+                        "Attack: " + str(p1.player_dmg),
+                        "Strength " + str(p1.s_str),
+                        "Vitality " + str(p1.s_vit)
+                        ],
+                   'level': [p1.level],
+                   'XP': [p1.pCurrXP, p1.pMaxXP],
+                   'Quest': quest_tracking(),
+                   'Equipped': print_equipped(),
+                   'Items': print_inventory(),
+                   'Coins': [p1.coins]
+                   }
+    stats_list = ['Name:', 'Stats:', 'Level:', 'XP:', 'Quest:', 'Equipped:', 'Items:']
+    for (xa, a) in zip(player_info.values(), stats_list):
+        print(a, xa)
 
 def player_update():
 
@@ -56,24 +56,24 @@ def player_update():
 
 
 def rewards():
-    PC.p1.pCurrXP += 1
-    if PC.p1.pCurrXP >= PC.p1.pMaxXP:
-        print("congratulations " + PC.p1.name + "\nYou are now level: " + PC.p1.level)
+    p1.pCurrXP += 1
+    if p1.pCurrXP >= p1.pMaxXP:
+        print("congratulations " + p1.name + "\nYou are now level: " + p1.level)
     else:
         pass
     Loot.loot_drop(Loot)
 
 
 def player_dmg_calc():
-    if PC.p1.equipped[0].equip_type == 'Weapon':
-        PC.p1.player_dmg = round((PC.p1.equipped[0].dmg * PC.p1.s_str))
+    if p1.equipped[0].equip_type == 'Weapon':
+        p1.player_dmg = round((p1.equipped[0].dmg * p1.s_str))
     else:
         pass
 
 
 def show_detailed_equipped():
 
-    for x in PC.p1.equipped:
+    for x in p1.equipped:
         if x.equip_type == 'Weapon':
             print(
                 "\n" +
@@ -94,57 +94,58 @@ def show_detailed_equipped():
 def print_stats():
 
     def print_inventory():
-        il = len(PC.p1.inventory)
+        il = len(p1.inventory)
         string_inventory = []
-        for t in PC.p1.inventory[0:il]:
+        for t in p1.inventory[0:il]:
             b = t
             string_inventory.append(b.name)
         return string_inventory
 
     def print_equipped():
-        el = list(PC.p1.equipped)
+        el = list(p1.equipped)
         el2 = []
         for pa in el:
             el2.append(pa.name)
         return el2
 
-    player_info = {'name': [PC.p1.name],
+    player_info = {'name': [p1.name],
                    'stats':
-                       ['Health: ' + str(PC.p1.hp),
-                        "Attack: " + str(PC.p1.player_dmg),
-                        "Strength " + str(PC.p1.s_str),
-                        "Vitality " + str(PC.p1.s_vit)
+                       ['Health: ' + str(p1.hp),
+                        "Attack: " + str(p1.player_dmg),
+                        "Strength " + str(p1.s_str),
+                        "Vitality " + str(p1.s_vit)
                         ],
-                   'level': [PC.p1.level],
-                   'XP': [PC.p1.pCurrXP, PC.p1.pMaxXP],
+                   'level': [p1.level],
+                   'XP': [p1.pCurrXP, p1.pMaxXP],
                    'Quest': quest_tracking(),
                    'Equipped': print_equipped(),
                    'Items': print_inventory(),
-                   'Coins': [PC.p1.coins]
+                   'Coins': [p1.coins]
                    }
     stats_list = ['Name:', 'Stats:', 'Level:', 'XP:', 'Quest:', 'Equipped:', 'Items:']
     for (xa, a) in zip(player_info.values(), stats_list):
         print(a, xa)
+
 class InventoryManagement:
     equipping = []
 
     def select_item_equip(self):
         f = 1
-        for ba in PC.p1.inventory:
+        for ba in p1.inventory:
             print("\n" + str(f) + ": " + str(ba.name))
             f += 1
         try:
             x = int(input("What item would you like to equip?\n"))
-            a = len(PC.p1.inventory)
+            a = len(p1.inventory)
 
             if int(x) > a or int(x) <= 0:
                 print("Please enter a valid input between 0-" + str(a))
                 self.select_item_equip(self)
             else:
-                b = PC.p1.inventory[int(x) - 1]
-                if PC.p1.level >= b.level:
+                b = p1.inventory[int(x) - 1]
+                if p1.level >= b.level:
                     self.equipping.insert(1, b)
-                    PC.p1.inventory.remove(b)
+                    p1.inventory.remove(b)
                     self.equip_item(self)
                     self.equipping.remove(b)
                 else:
@@ -161,32 +162,32 @@ class InventoryManagement:
         for x in self.equipping:
             if x.equip_type == 'Weapon':
                 eq = x
-                PC.p1.equipped.insert(0, eq)
+                p1.equipped.insert(0, eq)
             elif x.equip_type == 'Helmet':
                 eq = x
-                PC.p1.equipped.insert(1, eq)
+                p1.equipped.insert(1, eq)
             elif x.equip_type == 'Chest':
                 eq = x
-                PC.p1.equipped.insert(2, eq)
+                p1.equipped.insert(2, eq)
             elif x.equip_type == 'Legs':
                 eq = x
-                PC.p1.equipped.insert(3, eq)
+                p1.equipped.insert(3, eq)
 
         player_update()
 
 
 def quest_tracking():
     # Current quest player is on
-    PC.p1.currQuest = QuestController.q1.name
+    p1.currQuest = QuestController.q1.name
     # Current Quest Objective
-    PC.p1.qCurrObjective = QuestController.q1.qCurrObjective
+    p1.qCurrObjective = QuestController.q1.qCurrObjective
     # Completed Quest Objective
-    PC.p1.qCompObjective = QuestController.q1.qCompObjective
+    p1.qCompObjective = QuestController.q1.qCompObjective
 
 
 def is_finished():
 
-    if str(PC.p1.qCurrObjective) == str(PC.p1.qCompObjective):
+    if str(p1.qCurrObjective) == str(p1.qCompObjective):
         QuestController.q1.qFinished = True
     else:
         pass
@@ -209,7 +210,6 @@ def main_menu():
         elif x == '2':
             clear()
             print_stats()
-            InventoryManagement.select_item_equip(InventoryManagement)
         elif x == '3':
             pass
         elif x == '4':
