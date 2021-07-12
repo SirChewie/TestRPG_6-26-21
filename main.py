@@ -1,4 +1,4 @@
-#import needed classes
+# import needed classes
 import sys
 import os
 
@@ -66,7 +66,6 @@ def rewards():
         p1.CurrXP = (p1.CurrXP - p1.MaxXP)
         p1.MaxXP += (p1.MaxXP * .2)
 
-
     Loot.dropMod = p1.dropMod
     Loot.loot_drop(Loot)
     Loot.coinGain = EnemyController.Enemy.enemy_pool[0].coins
@@ -78,9 +77,12 @@ def rewards():
 
 
 def player_dmg_calc():
-    if p1.equipped[0].equip_type == 'Weapon':
-        p1.player_dmg = round((p1.equipped[0].dmg * p1.s_str))
-    else:
+    try:
+        if p1.equipped[0].equip_type == 'Weapon':
+            p1.player_dmg = round((p1.equipped[0].dmg * p1.s_str))
+        else:
+            pass
+    except IndexError:
         pass
 
 
@@ -91,16 +93,16 @@ def show_detailed_equipped():
             print(
                 "\n" +
                 str(x.name) + "\n" +
-                str(x.level) + "\n" +
-                str(x.dmg)
+                'Level: ' + str(x.level) + "\n" +
+                'Damage: ' + str(x.dmg)
                 )
         else:
             print(
                 "\n" +
                 str(x.name) + "\n" +
-                str(x.level) + "\n" +
-                str(x.pRes) + "\n" +
-                str(x.mRes)
+                'Level: ' + str(x.level) + "\n" +
+                'Physical Resist: ' + str(x.pRes) + "\n" +
+                'Magic Resist: ' + str(x.mRes)
                 )
 
 
@@ -112,27 +114,30 @@ class InventoryManagement:
         for ba in p1.inventory:
             print("\n" + str(f) + ": " + str(ba.name))
             f += 1
-        try:
-            x = int(input("What item would you like to equip?\n"))
-            a = len(p1.inventory)
+        if len(p1.inventory) < 1:
+            print("No items to equip.")
+        else:
+            try:
+                x = int(input("What item would you like to equip?\n"))
+                a = len(p1.inventory)
 
-            if int(x) > a or int(x) <= 0:
-                print("Please enter a valid input between 0-" + str(a))
-                self.select_item_equip(self)
-            else:
-                b = p1.inventory[int(x) - 1]
-                if p1.level >= b.level:
-                    self.equipping.insert(1, b)
-                    p1.inventory.remove(b)
-                    self.equip_item(self)
-                    self.equipping.remove(b)
-                else:
-                    print("Your level is to low to equip this item.")
+                if int(x) > a or int(x) <= 0:
+                    print("Please enter a valid input between 0-" + str(a))
                     self.select_item_equip(self)
-        except ValueError:
-            print("Please enter an integer only.")
-            self.select_item_equip(self)
-        self.equipping = []
+                else:
+                    b = p1.inventory[int(x) - 1]
+                    if p1.level >= b.level:
+                        self.equipping.insert(1, b)
+                        p1.inventory.remove(b)
+                        self.equip_item(self)
+                        self.equipping.remove(b)
+                    else:
+                        print("Your level is to low to equip this item.")
+                        self.select_item_equip(self)
+            except ValueError:
+                print("Please enter an integer only.")
+                self.select_item_equip(self)
+            self.equipping = []
 
     # equips equipment
     def equip_item(self):
@@ -183,27 +188,93 @@ def main_menu():
     try:
         if int(x) <= 0 or int(x) > lm:
             print(Colors.fg.red+"Please enter a valid input from 1-"+str(lm)+Colors.reset)
+        # Continue
         elif x == '1':
             encounter()
+        # Character
         elif x == '2':
             clear()
             print_stats()
+            character_menu()
+        # Shop
         elif x == '3':
             pass
+        # Help
         elif x == '4':
             print("What would you like help with?")
+        # Exit
         elif x == '5':
             sys.exit()
     except ValueError:
         print(Colors.fg.red+"Please enter a valid input(ValueError)"+Colors.reset)
 
 
-def encounter():
-    print('\nENCOUNTER!' + "\n" + "---------------------")
-    EnemyController.spawn_enemy()
-    EnemyController.print_stats()
-    rewards()
+def character_menu():
+    menu = ['Equip an Item', 'Detailed Equipped Info', 'Help', 'Back']
+    f = 1
+    print('\nCHARACTER MENU' + "\n" + "---------------------")
+    for xa in menu:
+        print(str(f) + ": " + str(xa))
+        f += 1
+    x = str(input())
+    lm = len(menu)
+    try:
+        if int(x) <= 0 or int(x) > lm:
+            print(Colors.fg.red + "Please enter a valid input from 1-" + str(lm) + Colors.reset)
+        # Equip an Item
+        elif x == '1':
+            InventoryManagement.select_item_equip(InventoryManagement)
+        # Detailed Equipped Info
+        elif x == '2':
+            show_detailed_equipped()
+        # Help
+        elif x == '3':
+            print("What would you like help with?")
+        # Back
+        elif x == '4':
+            pass
+    except ValueError:
+        print(Colors.fg.red + "Please enter a valid input(ValueError)" + Colors.reset)
 
+
+def combat_turn():
+    menu = ['Attack', 'Use Item', 'Run']
+    f = 1
+    for xa in menu:
+        print(str(f) + ": " + str(xa))
+        f += 1
+    x = str(input())
+    lm = len(menu)
+    try:
+        if int(x) <= 0 or int(x) > lm:
+            print(Colors.fg.red + "Please enter a valid input from 1-" + str(lm) + Colors.reset)
+        # Attack
+        elif x == '1':
+            player_dmg_calc()
+            print('\nYou hit ' + EnemyController.Enemy.enemy_pool[0].name +
+                  ' for ' + str(p1.player_dmg) + ' damage!\n')
+            EnemyController.Enemy.enemy_pool[0].hp -= p1.player_dmg
+
+        # Use Item
+        elif x == '2':
+            pass
+        # Back
+        elif x == '3':
+            print('You escaped!')
+            main_menu()
+    except ValueError:
+        print(Colors.fg.red + "Please enter a valid input(ValueError)" + Colors.reset)
+
+
+def encounter():
+    print('\nENCOUNTER!\n' + "---------------------")
+    EnemyController.spawn_enemy()
+
+    while EnemyController.Enemy.enemy_pool[0].hp >= 0:
+        clear()
+        EnemyController.print_stats()
+        combat_turn()
+    rewards()
 
 
 # setup Player
@@ -219,11 +290,8 @@ p1 = PC.Player(name=str(PC.playerNameInput),
                hp=10
                )
 
-#print player stats
-print_stats()
 
-
-#Keeps program running
+# Keeps program running
 try:
     while 1 < 2:
         main_menu()

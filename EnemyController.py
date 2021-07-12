@@ -55,33 +55,33 @@ def spawn_enemy():
 def print_stats():
 
     def print_inventory():
-        il = len(Enemy.e1.inventory)
+        il = len(Enemy.enemy_pool[0].inventory)
         string_inventory = []
-        for t in Enemy.e1.inventory[0:il]:
+        for t in Enemy.enemy_pool[0].inventory[0:il]:
             b = t
             string_inventory.append(b.name)
         return string_inventory
 
     def print_equipped():
-        el = list(Enemy.e1.equipped)
+        el = list(Enemy.enemy_pool[0].equipped)
         el2 = []
         for pa in el:
             el2.append(pa.name)
         return el2
 
-    player_info = {'name': Enemy.e1.name,
-                   'stats':
-                       ['Health: ' + str(Enemy.e1.hp),
-                        "Attack: " + str(Enemy.e1.enemy_dmg),
-                        "Strength " + str(Enemy.e1.s_str),
-                        "Vitality " + str(Enemy.e1.s_vit)
-                        ],
-                   'level': Enemy.e1.level,
+    player_info = {
+                   'name': str(Enemy.enemy_pool[0].name),
+                   'stats': ['Health: ' + str(Enemy.enemy_pool[0].hp),
+                             "Attack: " + str(Enemy.enemy_pool[0].enemy_dmg),
+                             "Strength " + str(Enemy.enemy_pool[0].s_str),
+                             "Vitality " + str(Enemy.enemy_pool[0].s_vit)
+                             ],
+                   'level': Enemy.enemy_pool[0].level,
                    'Equipped': print_equipped(),
-                   'Challenge Rating': Enemy.e1.CR,
+                   'Challenge Rating': Enemy.enemy_pool[0].CR,
                    'Items': print_inventory(),
-                   'Coins': Enemy.e1.coins
+                   'Coins': Enemy.enemy_pool[0].coins
                    }
     stats_list = ['Name:', 'Stats:', 'Level:', 'Equipped:', 'Challenge Rating']
-    for (xa, a) in zip(player_info.values(), stats_list):
-        print(a, xa)
+    for (xa, a) in zip(stats_list, player_info.values()):
+        print(str(xa) + ' ' + str(a))
