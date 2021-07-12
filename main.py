@@ -46,7 +46,7 @@ def print_stats():
                    'Quest': quest_tracking(),
                    'Equipped': print_equipped(),
                    'Items': print_inventory(),
-                   'Coins': p1.coins
+                   'Coins': str(p1.coins)
                    }
     stats_list = ['Name:', 'Stats:', 'Level:', 'XP:', 'Quest:', 'Equipped:', 'Items:', 'Coins:']
     for (xa, a) in zip(player_info.values(), stats_list):
@@ -59,9 +59,13 @@ def player_update():
 
 
 def rewards():
-    p1.CurrXP += 10
+    p1.CurrXP += (10 * EnemyController.Enemy.enemy_pool[0].level)
     if p1.CurrXP >= p1.MaxXP:
-        print("congratulations " + str(p1.name) + "\nYou are now level: " + str(p1.level))
+        print("Congratulations " + str(p1.name) + "\nYou are now level: " + str(p1.level)+'!')
+        p1.level += 1
+        p1.CurrXP = (p1.CurrXP - p1.MaxXP)
+        p1.MaxXP += (p1.MaxXP * .2)
+
 
     Loot.dropMod = p1.dropMod
     Loot.loot_drop(Loot)

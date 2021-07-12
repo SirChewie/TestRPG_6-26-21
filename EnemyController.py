@@ -23,7 +23,7 @@ class Enemy:
     inventory = []
     equipped = []
     coins = 0
-
+    CR = 0
 
     enemy_pool = []
 
@@ -48,6 +48,7 @@ def spawn_enemy():
                s_vit=h,
                )
     Enemy.e1.coins = random.randint(0, (10 * Enemy.e1.level))
+    Enemy.e1.CR = d + h
     Enemy.enemy_pool = [Enemy.e1]
 
 
@@ -77,9 +78,10 @@ def print_stats():
                         ],
                    'level': Enemy.e1.level,
                    'Equipped': print_equipped(),
+                   'Challenge Rating': Enemy.e1.CR,
                    'Items': print_inventory(),
                    'Coins': Enemy.e1.coins
                    }
-    stats_list = ['Name:', 'Stats:', 'Level:', 'Equipped:']
+    stats_list = ['Name:', 'Stats:', 'Level:', 'Equipped:', 'Challenge Rating']
     for (xa, a) in zip(player_info.values(), stats_list):
         print(a, xa)
