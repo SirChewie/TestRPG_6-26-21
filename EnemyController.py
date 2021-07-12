@@ -47,6 +47,7 @@ def spawn_enemy():
                s_str=d,
                s_vit=h,
                )
+    Enemy.e1.coins = random.randint(0, (10 * Enemy.e1.level))
     Enemy.enemy_pool = [Enemy.e1]
 
 
@@ -67,19 +68,18 @@ def print_stats():
             el2.append(pa.name)
         return el2
 
-    player_info = {'name': [Enemy.e1.name],
+    player_info = {'name': Enemy.e1.name,
                    'stats':
                        ['Health: ' + str(Enemy.e1.hp),
                         "Attack: " + str(Enemy.e1.enemy_dmg),
                         "Strength " + str(Enemy.e1.s_str),
                         "Vitality " + str(Enemy.e1.s_vit)
                         ],
-                   'level': [Enemy.e1.level],
-                   'XP': [Enemy.e1.CurrXP, Enemy.e1.MaxXP],
+                   'level': Enemy.e1.level,
                    'Equipped': print_equipped(),
                    'Items': print_inventory(),
-                   'Coins': [Enemy.e1.coins]
+                   'Coins': Enemy.e1.coins
                    }
-    stats_list = ['Name:', 'Stats:', 'Level:', 'XP:', 'Equipped:', 'Items:']
+    stats_list = ['Name:', 'Stats:', 'Level:', 'Equipped:']
     for (xa, a) in zip(player_info.values(), stats_list):
         print(a, xa)

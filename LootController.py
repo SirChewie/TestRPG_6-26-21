@@ -1,6 +1,6 @@
 import random
 
-
+import EnemyController
 
 
 class Loot:
@@ -40,7 +40,6 @@ class Loot:
 
     #What loot that was dropped?
     def loot_drop_roll(self):
-
 
         i = random.randint(0, (len(Loot.lootList) - 1))
         self.coinGain = random.randint(1, 10)

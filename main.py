@@ -34,23 +34,24 @@ def print_stats():
             el2.append(pa.name)
         return el2
 
-    player_info = {'name': [p1.name],
+    player_info = {'name': p1.name,
                    'stats':
                        ['Health: ' + str(p1.hp),
                         "Attack: " + str(p1.player_dmg),
                         "Strength " + str(p1.s_str),
                         "Vitality " + str(p1.s_vit)
                         ],
-                   'level': [p1.level],
-                   'XP': [p1.CurrXP, p1.MaxXP],
+                   'level': p1.level,
+                   'XP': str(p1.CurrXP) + "/" + str(p1.MaxXP),
                    'Quest': quest_tracking(),
                    'Equipped': print_equipped(),
                    'Items': print_inventory(),
-                   'Coins': [p1.coins]
+                   'Coins': p1.coins
                    }
-    stats_list = ['Name:', 'Stats:', 'Level:', 'XP:', 'Quest:', 'Equipped:', 'Items:']
+    stats_list = ['Name:', 'Stats:', 'Level:', 'XP:', 'Quest:', 'Equipped:', 'Items:', 'Coins:']
     for (xa, a) in zip(player_info.values(), stats_list):
         print(a, xa)
+
 
 def player_update():
 
@@ -64,9 +65,13 @@ def rewards():
 
     Loot.dropMod = p1.dropMod
     Loot.loot_drop(Loot)
+    Loot.coinGain = EnemyController.Enemy.enemy_pool[0].coins
     for x in Loot.drops:
         p1.inventory.append(x)
+    p1.coins += Loot.coinGain
     Loot.drops = []
+    Loot.coinGain = 0
+
 
 def player_dmg_calc():
     if p1.equipped[0].equip_type == 'Weapon':
