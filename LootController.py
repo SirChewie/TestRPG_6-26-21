@@ -21,6 +21,7 @@ class Loot:
 
     wep1 = Wep('Weapon', 'Axe', 1, 2)
     wepList = [wep1]
+    wepSlot = Wep('Weapon', 'No Weapon', 1, 1)
 
     class Armor:
         def __init__(self, equip_type, name, level, pRes, mRes):
@@ -33,6 +34,9 @@ class Loot:
     a1 = Armor('Helmet', 'Cloth Hat', 1, 1, 0)
     a2 = Armor('Chest', 'Cloth Shirt', 1, 1, 0)
     a3 = Armor('Legs', 'Cloth Pants', 1, 1, 0)
+    armorSlotH = Armor('Helmet', 'No Helmet', 0, 0, 0)
+    armorSlotC = Armor('Chest', 'No Chest', 0, 0, 0)
+    armorSlotL = Armor('Legs', 'No Legs', 0, 0, 0)
     armorList = [a1, a2, a3]
     # Loot drop lists
     noneList = []

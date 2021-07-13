@@ -79,7 +79,7 @@ def rewards():
 def player_dmg_calc():
     try:
         if p1.equipped[0].equip_type == 'Weapon':
-            p1.player_dmg = round((p1.equipped[0].dmg * p1.s_str))
+            p1.player_dmg = p1.equipped[0].dmg * p1.s_str
         else:
             pass
     except IndexError:
@@ -145,15 +145,52 @@ class InventoryManagement:
         for x in self.equipping:
             if x.equip_type == 'Weapon':
                 eq = x
+                if p1.equipped[0].equip_type == 'Weapon':
+                    req = p1.equipped[0]
+                    p1.inventory.append(req)
+                    p1.equipped.remove(req)
+                    if req.name == 'No Weapon':
+                        p1.inventory.remove(req)
                 p1.equipped.insert(0, eq)
             elif x.equip_type == 'Helmet':
                 eq = x
+                try:
+                    if p1.equipped[1].equip_type == 'Helmet':
+                        req = p1.equipped[1]
+                        p1.inventory.append(req)
+                        p1.equipped.remove(req)
+                        if req.name == 'No Helmet':
+                            p1.inventory.remove(req)
+                except IndexError:
+                    print('IndexError')
+                    pass
                 p1.equipped.insert(1, eq)
+
             elif x.equip_type == 'Chest':
                 eq = x
+                try:
+                    if p1.equipped[2].equip_type == 'Chest':
+                        req = p1.equipped[2]
+                        p1.inventory.append(req)
+                        p1.equipped.remove(req)
+                        if req.name == 'No Chest':
+                            p1.inventory.remove(req)
+                except IndexError:
+                    print('IndexError')
+                    pass
                 p1.equipped.insert(2, eq)
             elif x.equip_type == 'Legs':
                 eq = x
+                try:
+                    if p1.equipped[3].equip_type == 'Legs':
+                        req = p1.equipped[3]
+                        p1.inventory.append(req)
+                        p1.equipped.remove(req)
+                        if req.name == 'No Legs':
+                            p1.inventory.remove(req)
+                except IndexError:
+                    print('IndexError')
+                    pass
                 p1.equipped.insert(3, eq)
 
         player_update()
@@ -238,6 +275,7 @@ def character_menu():
 
 
 def combat_turn():
+
     menu = ['Attack', 'Use Item', 'Run']
     f = 1
     for xa in menu:
@@ -261,7 +299,8 @@ def combat_turn():
         # Back
         elif x == '3':
             print('You escaped!')
-            main_menu()
+            EnemyController.Enemy.enemy_pool[0].hp = 0
+            p1.ran = True
     except ValueError:
         print(Colors.fg.red + "Please enter a valid input(ValueError)" + Colors.reset)
 
@@ -270,12 +309,15 @@ def encounter():
     print('\nENCOUNTER!\n' + "---------------------")
     EnemyController.spawn_enemy()
 
-    while EnemyController.Enemy.enemy_pool[0].hp >= 0:
+    while EnemyController.Enemy.enemy_pool[0].hp > 0:
         clear()
         EnemyController.print_stats()
         combat_turn()
-    rewards()
-
+        if p1.ran is True:
+            EnemyController.Enemy.enemy_pool[0].hp = 0
+    if p1.ran is False:
+        rewards()
+    p1.ran = False
 
 # setup Player
 PC.get_player_info()
@@ -289,6 +331,7 @@ p1 = PC.Player(name=str(PC.playerNameInput),
                MaxXP=100,
                hp=10
                )
+p1.equipped = [Loot.wepSlot, Loot.armorSlotH, Loot.armorSlotC, Loot.armorSlotL]
 
 
 # Keeps program running

@@ -36,8 +36,8 @@ def spawn_enemy():
     lev = 1
     d = random.randint(1, 5)
     h = random.randint(1, 5)
-    ed = (lev * d) * 10
-    vs = (lev * h) * 10
+    ed = (lev * d) * 2
+    vs = (lev * h) * 2
 
     Enemy.e1 = Enemy(name=enemy_types[a],
                level=lev, CurrXP=0,

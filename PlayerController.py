@@ -28,6 +28,7 @@ class Player:
     equipped = []
     coins = 0
     dropMod = 1
+    ran = False
 
 
 def get_player_info():
