@@ -18,6 +18,7 @@ class Loot:
             self.name = name
             self.level = level
             self.dmg = dmg
+        value = 0
 
     wep1 = Wep('Weapon', 'Axe', 1, 2)
     wepList = [wep1]
@@ -31,6 +32,7 @@ class Loot:
             self.level = level
             self.pRes = pRes
             self.mRes = mRes
+        value = 0
     a1 = Armor('Helmet', 'Cloth Hat', 1, 1, 0)
     a2 = Armor('Chest', 'Cloth Shirt', 1, 1, 0)
     a3 = Armor('Legs', 'Cloth Pants', 1, 1, 0)
@@ -41,6 +43,8 @@ class Loot:
     # Loot drop lists
     noneList = []
     lootList = [armorList, wepList, noneList]
+
+
 
     # What loot that was dropped?
     def loot_drop_roll(self):

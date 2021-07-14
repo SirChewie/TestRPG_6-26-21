@@ -3,8 +3,10 @@ import sys
 import os
 
 import EnemyController
+import LootController
 import QuestController
 import PlayerController as PC
+import ShopSystem
 from LootController import Loot
 from TextColorContoller import Colors
 
@@ -58,6 +60,7 @@ def print_stats():
 def player_update():
     player_dmg_calc()
     player_def_calc()
+    ShopSystem.player_coins = p1.coins
 
 
 def rewards():
@@ -68,6 +71,7 @@ def rewards():
         p1.level += 1
         p1.CurrXP = (p1.CurrXP - p1.MaxXP)
         p1.MaxXP += (p1.MaxXP * .2)
+        EnemyController.plvl += 1
 
     Loot.dropMod = p1.dropMod
     Loot.loot_drop(Loot)
@@ -259,9 +263,12 @@ def main_menu():
             character_menu()
         # Shop
         elif x == '3':
-            pass
+            clear()
+            ShopSystem.player_coins = p1.coins
+            shop_menu()
         # Help
         elif x == '4':
+            clear()
             print("What would you like help with?")
         # Exit
         elif x == '5':
@@ -300,6 +307,45 @@ def character_menu():
             pass
     except ValueError:
         print(Colors.fg.red + "Please enter a valid input(ValueError)" + Colors.reset)
+
+
+def shop_menu():
+
+    menu = ['Buy', 'Sell', 'Help', 'Back']
+    f = 1
+    print('\nSHOP' + "\n" + "---------------------")
+    for xa in menu:
+        print(str(f) + ": " + str(xa))
+        f += 1
+    x = str(input())
+    try:
+        if x == '1':
+            print('What would you like to buy?')
+            for sx in ShopSystem.shopSell:
+                get_values()
+                print(sx.value)
+        elif x == '2':
+
+            get_values()
+            s = 1
+            for x in p1.inventory:
+                print(str(s) + ': ' + str(x.name) + ', value: ' + str(x.value))
+                s += 1
+            eq = input('What would you like to sell\n')
+        elif x == '3':
+            print('What would you like help with?')
+        elif x == '4':
+            pass
+    except ValueError:
+        print("Please enter a valid input(ValueError)")
+
+
+def get_values():
+    for x in p1.inventory:
+        if x.equip_type == 'Weapon':
+            x.value = (x.level * x.dmg)
+        else:
+            x.value = (x.level * (x.pRes + x.mRes))
 
 
 def combat_turn():
@@ -356,14 +402,15 @@ def encounter():
         EnemyController.print_stats()
         print(p1.currHP)
         combat_turn()
-        EnemyController.print_stats()
-        print(p1.currHP)
-        enemy_turn()
         if p1.ran is True:
             EnemyController.Enemy.enemy_pool[0].hp = 0
             input('You got away! \n Press Enter to continue.')
             p1.hp = maxpHP
-        elif p1.currHP <= 0:
+            break
+        EnemyController.print_stats()
+        print(p1.currHP)
+        enemy_turn()
+        if p1.currHP <= 0:
             p1.ran = True
             clear()
             EnemyController.Enemy.enemy_pool[0].hp = 0

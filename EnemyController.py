@@ -1,6 +1,6 @@
 import random
 
-
+plvl = 1
 class Enemy:
 
     def __init__(self,
@@ -34,8 +34,8 @@ def spawn_enemy():
     a = random.randint(0, len(enemy_types)-1)
 
     lev = 1
-    d = random.randint(1, 5)
-    h = random.randint(1, 5)
+    d = random.randint(1, (2 + plvl))
+    h = random.randint(1, (2 + plvl))
     ed = (lev * d) * 2
     vs = (lev * h) * 2
 
@@ -86,6 +86,3 @@ def print_stats():
     stats_list = ['Name:', 'Stats:', 'Level:', 'Equipped:', 'Challenge Rating']
     for (xa, a) in zip(stats_list, player_info.values()):
         print(str(xa) + ' ' + str(a))
-
-
-

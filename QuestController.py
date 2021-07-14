@@ -1,4 +1,4 @@
-class Quests():
+class Quests:
     def __init__(self, name, levelReq, xpGain,qCurrObjective,qCompObjective, qFinished):
         self.name = name
         self.levelReq = levelReq
@@ -9,6 +9,7 @@ class Quests():
 
     def quest_updater(self):
         pass
+
 
 finishedQuests = []
 

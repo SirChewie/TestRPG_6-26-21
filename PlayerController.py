@@ -37,11 +37,3 @@ class Player:
 def get_player_info():
     global playerNameInput
     playerNameInput = input("Enter your name\n")
-
-
-
-
-
-
-
-
