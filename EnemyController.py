@@ -53,6 +53,7 @@ def spawn_enemy():
 
 
 def print_stats():
+    print('\n')
 
     def print_inventory():
         il = len(Enemy.enemy_pool[0].inventory)
@@ -85,3 +86,6 @@ def print_stats():
     stats_list = ['Name:', 'Stats:', 'Level:', 'Equipped:', 'Challenge Rating']
     for (xa, a) in zip(stats_list, player_info.values()):
         print(str(xa) + ' ' + str(a))
+
+
+

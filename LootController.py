@@ -42,19 +42,17 @@ class Loot:
     noneList = []
     lootList = [armorList, wepList, noneList]
 
-    #What loot that was dropped?
+    # What loot that was dropped?
     def loot_drop_roll(self):
 
         i = random.randint(0, (len(Loot.lootList) - 1))
         self.coinGain = random.randint(1, 10)
         if i == 0:
-            print('THE MONSTER WAS CARRYING SOMETHING!')
             x = Loot.armorList
             b = random.randint(0, (len(x)-1))
             self.drops.append(Loot.armorList[b])
             self.ldr.append(Loot.armorList[b])
         elif i == 1:
-            print('THE MONSTER WAS CARRYING SOMETHING!')
             x = Loot.wepList
             b = random.randint(0, (len(x)-1))
             self.drops.append(Loot.wepList[b])
@@ -62,7 +60,7 @@ class Loot:
         else:
             pass
 
-    #Calls Loot drop roll x(numDrop) times
+    # Calls Loot drop roll x(numDrop) times
     def loot_drop(self):
         self.numDrops = 0
 
@@ -70,9 +68,9 @@ class Loot:
         while self.numDrops > 0:
             Loot.loot_drop_roll(Loot)
             self.numDrops -= 1
-
-
-    #prints out the item(s) info
+        print('THE MONSTER WAS CARRYING SOMETHING!')
+        print('Coins: ' + str(Loot.coinGain))
+    # prints out the item(s) info
         for x in Loot.drops:
             if x.equip_type == 'Weapon':
                 print(
@@ -90,3 +88,4 @@ class Loot:
                     "Magic Res: " + str(x.mRes) + "\n"
                     )
 
+        input("Press Enter to continue")

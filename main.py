@@ -39,7 +39,9 @@ def print_stats():
                        ['Health: ' + str(p1.hp),
                         "Attack: " + str(p1.player_dmg),
                         "Strength " + str(p1.s_str),
-                        "Vitality " + str(p1.s_vit)
+                        "Vitality " + str(p1.s_vit),
+                        'Physical Resist ' + str(p1.pRes),
+                        'Magic Resist ' + str(p1.mRes)
                         ],
                    'level': p1.level,
                    'XP': str(p1.CurrXP) + "/" + str(p1.MaxXP),
@@ -54,11 +56,12 @@ def print_stats():
 
 
 def player_update():
-
     player_dmg_calc()
+    player_def_calc()
 
 
 def rewards():
+    clear()
     p1.CurrXP += (10 * EnemyController.Enemy.enemy_pool[0].level)
     if p1.CurrXP >= p1.MaxXP:
         print("Congratulations " + str(p1.name) + "\nYou are now level: " + str(p1.level)+'!')
@@ -84,6 +87,28 @@ def player_dmg_calc():
             pass
     except IndexError:
         pass
+
+
+def player_def_calc():
+    pr = 0
+    mr = 0
+    try:
+        for x in p1.equipped:
+            if x.equip_type == 'Helmet':
+                pr += x.pRes
+                mr += x.mRes
+            elif x.equip_type == 'Chest':
+                pr += x.pRes
+                mr += x.mRes
+            elif x.equip_type == 'Legs':
+                pr += x.pRes
+                mr += x.mRes
+            else:
+                pass
+    except IndexError:
+        pass
+    p1.pRes = pr
+    p1.mRes = mr
 
 
 def show_detailed_equipped():
@@ -214,6 +239,7 @@ def is_finished():
 
 
 def main_menu():
+    clear()
     menu = ['Continue', 'Character', 'Shop', 'Help', 'Exit']
     f = 1
     print('\nMAIN MENU' + "\n" + "---------------------")
@@ -230,8 +256,6 @@ def main_menu():
             encounter()
         # Character
         elif x == '2':
-            clear()
-            print_stats()
             character_menu()
         # Shop
         elif x == '3':
@@ -241,15 +265,19 @@ def main_menu():
             print("What would you like help with?")
         # Exit
         elif x == '5':
+            print("Good bye")
             sys.exit()
     except ValueError:
         print(Colors.fg.red+"Please enter a valid input(ValueError)"+Colors.reset)
 
 
 def character_menu():
+    clear()
+
     menu = ['Equip an Item', 'Detailed Equipped Info', 'Help', 'Back']
     f = 1
     print('\nCHARACTER MENU' + "\n" + "---------------------")
+    print_stats()
     for xa in menu:
         print(str(f) + ": " + str(xa))
         f += 1
@@ -288,7 +316,8 @@ def combat_turn():
             print(Colors.fg.red + "Please enter a valid input from 1-" + str(lm) + Colors.reset)
         # Attack
         elif x == '1':
-            player_dmg_calc()
+            clear()
+            player_update()
             print('\nYou hit ' + EnemyController.Enemy.enemy_pool[0].name +
                   ' for ' + str(p1.player_dmg) + ' damage!\n')
             EnemyController.Enemy.enemy_pool[0].hp -= p1.player_dmg
@@ -298,29 +327,56 @@ def combat_turn():
             pass
         # Back
         elif x == '3':
-            print('You escaped!')
+            clear()
             EnemyController.Enemy.enemy_pool[0].hp = 0
             p1.ran = True
     except ValueError:
         print(Colors.fg.red + "Please enter a valid input(ValueError)" + Colors.reset)
 
 
+def enemy_turn():
+    try:
+        epdc = EnemyController.Enemy.enemy_pool[0].enemy_dmg / p1.pRes
+        emdc = EnemyController.Enemy.enemy_pool[0].enemy_dmg / p1.mRes
+    except ZeroDivisionError:
+        epdc = 1
+        emdc = 1
+    x = int(EnemyController.Enemy.enemy_pool[0].enemy_dmg/epdc)
+    p1.currHP -= x
+    print('You received ' + str(x) + ' damage')
+
+
 def encounter():
+    maxpHP = p1.hp
+    p1.currHP = p1.hp
     print('\nENCOUNTER!\n' + "---------------------")
     EnemyController.spawn_enemy()
-
+    clear()
     while EnemyController.Enemy.enemy_pool[0].hp > 0:
-        clear()
         EnemyController.print_stats()
+        print(p1.currHP)
         combat_turn()
+        EnemyController.print_stats()
+        print(p1.currHP)
+        enemy_turn()
         if p1.ran is True:
             EnemyController.Enemy.enemy_pool[0].hp = 0
+            input('You got away! \n Press Enter to continue.')
+            p1.hp = maxpHP
+        elif p1.currHP <= 0:
+            p1.ran = True
+            clear()
+            EnemyController.Enemy.enemy_pool[0].hp = 0
+            input('You died... \n Press Enter to continue.')
+            p1.hp = maxpHP
     if p1.ran is False:
         rewards()
     p1.ran = False
 
+
 # setup Player
 PC.get_player_info()
+
 
 p1 = PC.Player(name=str(PC.playerNameInput),
                player_dmg=1,

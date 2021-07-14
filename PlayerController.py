@@ -21,6 +21,9 @@ class Player:
         self.player_dmg = player_dmg
         self.s_str = s_str
         self.s_vit = s_vit
+    currHP = 0
+    pRes = 1
+    mRes = 1
     currQuest = ''
     qCurrObjective = ''
     qCompObjective = ''
