@@ -1,6 +1,8 @@
 import random
 
 plvl = 1
+
+
 class Enemy:
 
     def __init__(self,

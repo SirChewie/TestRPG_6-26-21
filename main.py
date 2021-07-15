@@ -67,8 +67,8 @@ def rewards():
     clear()
     p1.CurrXP += (10 * EnemyController.Enemy.enemy_pool[0].level)
     if p1.CurrXP >= p1.MaxXP:
-        print("Congratulations " + str(p1.name) + "\nYou are now level: " + str(p1.level)+'!')
         p1.level += 1
+        print("Congratulations " + str(p1.name) + "\nYou are now level: " + str(p1.level)+'!')
         p1.CurrXP = (p1.CurrXP - p1.MaxXP)
         p1.MaxXP += (p1.MaxXP * .2)
         EnemyController.plvl += 1
@@ -111,8 +111,8 @@ def player_def_calc():
                 pass
     except IndexError:
         pass
-    p1.pRes = pr
-    p1.mRes = mr
+    p1.pRes = (pr + 1)
+    p1.mRes = (mr + 1)
 
 
 def show_detailed_equipped():
@@ -406,6 +406,8 @@ def encounter():
             EnemyController.Enemy.enemy_pool[0].hp = 0
             input('You got away! \n Press Enter to continue.')
             p1.hp = maxpHP
+            break
+        elif EnemyController.Enemy.enemy_pool[0].hp <= 0:
             break
         EnemyController.print_stats()
         print(p1.currHP)
