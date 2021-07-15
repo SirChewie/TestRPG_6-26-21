@@ -11,7 +11,7 @@ class Loot:
     drops = []
     dropMod = 0
     coinGain = 0
-
+    coin_total = 0
     class Wep:
         def __init__(self, equip_type, name, level, dmg):
             self.equip_type = equip_type
@@ -51,6 +51,7 @@ class Loot:
 
         i = random.randint(0, (len(Loot.lootList) - 1))
         self.coinGain = random.randint(1, 10)
+        self.coin_total += self.coinGain
         if i == 0:
             x = Loot.armorList
             b = random.randint(0, (len(x)-1))
@@ -64,6 +65,7 @@ class Loot:
         else:
             pass
 
+
     # Calls Loot drop roll x(numDrop) times
     def loot_drop(self):
         self.numDrops = 0
@@ -73,7 +75,6 @@ class Loot:
             Loot.loot_drop_roll(Loot)
             self.numDrops -= 1
         print('THE MONSTER WAS CARRYING SOMETHING!')
-        print('Coins: ' + str(Loot.coinGain))
     # prints out the item(s) info
         for x in Loot.drops:
             if x.equip_type == 'Weapon':
@@ -91,5 +92,6 @@ class Loot:
                     "Physical Res: " + str(x.pRes) + "\n" +
                     "Magic Res: " + str(x.mRes) + "\n"
                     )
+        print('Coins: ' + str(Loot.coin_total))
 
         input("Press Enter to continue")

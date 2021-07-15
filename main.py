@@ -78,7 +78,7 @@ def rewards():
     Loot.coinGain = EnemyController.Enemy.enemy_pool[0].coins
     for x in Loot.drops:
         p1.inventory.append(x)
-    p1.coins += Loot.coinGain
+    p1.coins += Loot.coin_total
     Loot.drops = []
     Loot.coinGain = 0
 
@@ -310,7 +310,7 @@ def character_menu():
 
 
 def shop_menu():
-
+    print('You have ' + str(p1.coins) + ' coins')
     menu = ['Buy', 'Sell', 'Help', 'Back']
     f = 1
     print('\nSHOP' + "\n" + "---------------------")
@@ -325,13 +325,15 @@ def shop_menu():
                 get_values()
                 print(sx.value)
         elif x == '2':
-
             get_values()
             s = 1
             for x in p1.inventory:
                 print(str(s) + ': ' + str(x.name) + ', value: ' + str(x.value))
                 s += 1
             eq = input('What would you like to sell\n')
+            p1.coins += p1.inventory[int(eq)-1].value
+            req = p1.inventory[eq]  # reference the Equipment section :)
+            p1.inventory.remove(req)
         elif x == '3':
             print('What would you like help with?')
         elif x == '4':
