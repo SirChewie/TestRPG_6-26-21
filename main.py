@@ -310,6 +310,7 @@ def character_menu():
 
 
 def shop_menu():
+
     print('You have ' + str(p1.coins) + ' coins')
     menu = ['Buy', 'Sell', 'Help', 'Back']
     f = 1
@@ -325,15 +326,33 @@ def shop_menu():
                 get_values()
                 print(sx.value)
         elif x == '2':
+            selling = []
             get_values()
             s = 1
             for x in p1.inventory:
                 print(str(s) + ': ' + str(x.name) + ', value: ' + str(x.value))
                 s += 1
-            eq = input('What would you like to sell\n')
-            p1.coins += p1.inventory[int(eq)-1].value
-            req = p1.inventory[eq]  # reference the Equipment section :)
-            p1.inventory.remove(req)
+
+            def selling_items():
+                try:
+                    eq = input('What would you like to sell?\n')
+                    xs = p1.inventory[(int(eq)-1)]
+                    selling.append(xs)
+                    p1.inventory.remove(xs)
+                    print('1: Yes\n2: No')
+                    e = input('Would you like to sell anything else?')
+                    if e == '1':
+                        selling_items()
+                    else:
+                        pass
+                    for a in selling:
+                        p1.coins += a.value
+                        selling.remove(a)
+                except ValueError:
+                    print("Please enter an integer only.")
+                    shop_menu()
+            selling_items()
+
         elif x == '3':
             print('What would you like help with?')
         elif x == '4':
@@ -380,6 +399,7 @@ def combat_turn():
             p1.ran = True
     except ValueError:
         print(Colors.fg.red + "Please enter a valid input(ValueError)" + Colors.reset)
+        combat_turn()
 
 
 def enemy_turn():
@@ -390,6 +410,7 @@ def enemy_turn():
         epdc = 1
         emdc = 1
     x = int(EnemyController.Enemy.enemy_pool[0].enemy_dmg/epdc)
+    m = int(EnemyController.Enemy.enemy_pool[0].enemy_dmg/emdc)
     p1.currHP -= x
     print('You received ' + str(x) + ' damage')
 

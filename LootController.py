@@ -1,6 +1,5 @@
 import random
 
-import EnemyController
 
 
 class Loot:
@@ -50,7 +49,7 @@ class Loot:
     def loot_drop_roll(self):
 
         i = random.randint(0, (len(Loot.lootList) - 1))
-        self.coinGain = random.randint(1, 10)
+        self.coinGain = random.randint(1, 3)
         self.coin_total += self.coinGain
         if i == 0:
             x = Loot.armorList

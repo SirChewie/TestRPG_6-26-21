@@ -49,7 +49,7 @@ def spawn_enemy():
                s_str=d,
                s_vit=h,
                )
-    Enemy.e1.coins = random.randint(0, (10 * Enemy.e1.level))
+    Enemy.e1.coins = random.randint(0, round(1 * Enemy.e1.CR))
     Enemy.e1.CR = d + h
     Enemy.enemy_pool = [Enemy.e1]
 
