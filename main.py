@@ -116,7 +116,7 @@ def player_def_calc():
 
 
 def show_detailed_equipped():
-
+    print('\nEquipped Gear' + "\n" + "---------------------")
     for x in p1.equipped:
         if x.equip_type == 'Weapon':
             print(
@@ -299,6 +299,7 @@ def character_menu():
         # Detailed Equipped Info
         elif x == '2':
             show_detailed_equipped()
+            input('\nPress Enter to continue.')
         # Help
         elif x == '3':
             print("What would you like help with?")
