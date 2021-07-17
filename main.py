@@ -326,6 +326,17 @@ def shop_menu():
             for sx in ShopSystem.shopSell:
                 get_values()
                 print(sx.value)
+
+            def buying_items():
+                ShopSystem.shopSell = [Loot.wep1, Loot.a1, Loot.a2, Loot.a3]
+
+                ss = 1
+                for xss in ShopSystem.shopSell:
+                    print(str(ss) + ': ' + str(xss.name) + ', value: ' + str(xss.value))
+                    ss += 1
+            buying_items()
+            ShopSystem.playerBuy = []
+
         elif x == '2':
             selling = []
             get_values()
@@ -343,6 +354,10 @@ def shop_menu():
                     print('1: Yes\n2: No')
                     e = input('Would you like to sell anything else?')
                     if e == '1':
+                        s2 = 1
+                        for z in p1.inventory:
+                            print(str(s2) + ': ' + str(z.name) + ', value: ' + str(z.value))
+                            s2 += 1
                         selling_items()
                     else:
                         pass

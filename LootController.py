@@ -1,7 +1,6 @@
 import random
 
 
-
 class Loot:
     def __init__(self):
         pass
@@ -11,6 +10,7 @@ class Loot:
     dropMod = 0
     coinGain = 0
     coin_total = 0
+
     class Wep:
         def __init__(self, equip_type, name, level, dmg):
             self.equip_type = equip_type
@@ -43,8 +43,6 @@ class Loot:
     noneList = []
     lootList = [armorList, wepList, noneList]
 
-
-
     # What loot that was dropped?
     def loot_drop_roll(self):
 
@@ -63,7 +61,6 @@ class Loot:
             self.ldr.append(Loot.wepList[b])
         else:
             pass
-
 
     # Calls Loot drop roll x(numDrop) times
     def loot_drop(self):
